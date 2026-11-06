@@ -1,0 +1,268 @@
+-- ============================================
+-- BASE DE DATOS: importadora_repuestos
+-- ============================================
+CREATE DATABASE IF NOT EXISTS importadora_repuestos;
+USE importadora_repuestos;
+
+-- ============================================
+-- 1. TABLA: roles
+-- ============================================
+CREATE TABLE roles (
+    id_rol INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_rol VARCHAR(50) NOT NULL UNIQUE,
+    descripcion TEXT,
+    nivel_permiso INT NOT NULL DEFAULT 1 COMMENT '1=mayor, 5=menor',
+    estado TINYINT DEFAULT 1 COMMENT '1=activo, 0=inactivo',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- 2. TABLA: sucursales
+-- ============================================
+CREATE TABLE sucursales (
+    id_sucursal INT PRIMARY KEY AUTO_INCREMENT,
+    codigo_sucursal VARCHAR(20) NOT NULL UNIQUE,
+    nombre_sucursal VARCHAR(100) NOT NULL,
+    direccion TEXT,
+    telefono VARCHAR(20),
+    email VARCHAR(100),
+    ciudad VARCHAR(50),
+    estado TINYINT DEFAULT 1 COMMENT '1=activo, 0=inactivo',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- 3. TABLA: usuarios
+-- ============================================
+CREATE TABLE usuarios (
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+    id_rol INT NOT NULL,
+    id_sucursal INT NULL COMMENT 'NULL para superadministrador',
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    intentos_fallidos INT DEFAULT 0,
+    bloqueado_hasta DATETIME NULL,
+    ultimo_login DATETIME NULL,
+    ultima_ip VARCHAR(45),
+    token_recuperacion VARCHAR(100) NULL,
+    token_expira DATETIME NULL,
+    estado TINYINT DEFAULT 1 COMMENT '1=activo, 0=inactivo, 2=bloqueado',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_rol) REFERENCES roles(id_rol),
+    FOREIGN KEY (id_sucursal) REFERENCES sucursales(id_sucursal)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- 4. TABLA: usuarios_datos (información personal)
+-- ============================================
+CREATE TABLE usuarios_datos (
+    id_usuario_dato INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    cedula VARCHAR(20) UNIQUE,
+    telefono_movil VARCHAR(20),
+    telefono_fijo VARCHAR(20),
+    direccion TEXT,
+    fecha_nacimiento DATE,
+    genero ENUM('M','F','OTRO') DEFAULT 'OTRO',
+    foto_perfil VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- 5. TABLA: logs_acceso (historial de intentos)
+-- ============================================
+CREATE TABLE logs_acceso (
+    id_log INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NULL,
+    email VARCHAR(100),
+    ip_cliente VARCHAR(45),
+    user_agent TEXT,
+    tipo_evento ENUM('login_exitoso', 'login_fallido', 'bloqueo', 'logout', 'recuperacion') NOT NULL,
+    descripcion TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_usuario (id_usuario),
+    INDEX idx_email (email),
+    INDEX idx_fecha (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- 6. TABLA: tokens_sesion (para manejo de sesiones)
+-- ============================================
+CREATE TABLE tokens_sesion (
+    id_token INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    token VARCHAR(255) NOT NULL UNIQUE,
+    ip_creacion VARCHAR(45),
+    user_agent TEXT,
+    fecha_expiracion DATETIME NOT NULL,
+    activo TINYINT DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
+    INDEX idx_token (token),
+    INDEX idx_expiracion (fecha_expiracion)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- INSERCIÓN DE DATOS INICIALES
+-- ============================================
+
+-- 1. Roles
+INSERT INTO roles (nombre_rol, descripcion, nivel_permiso) VALUES
+('SuperAdministrador', 'Acceso total al sistema, sin restricción de sucursal', 1),
+('AdministradorSucursal', 'Administra su sucursal y usuarios asignados', 2),
+('SupervisorEncargado', 'Supervisa operaciones y repartidores', 3),
+('Cajero', 'Gestiona ventas y cobros en sucursal', 4),
+('Repartidor', 'Gestiona entregas y pedidos', 5);
+
+-- 2. Sucursales
+INSERT INTO sucursales (codigo_sucursal, nombre_sucursal, direccion, telefono, email, ciudad) VALUES
+('SUC-001', 'Sucursal Central', 'Av. Principal #123, Zona Central', '591-2-1234567', 'central@importadora.com', 'Santa Cruz'),
+('SUC-002', 'Sucursal Norte', 'Calle 15 #456, Zona Norte', '591-2-7654321', 'norte@importadora.com', 'Santa Cruz'),
+('SUC-003', 'Sucursal Este', 'Av. Circunvalación #789, Zona Este', '591-3-9876543', 'este@importadora.com', 'Cochabamba'),
+('SUC-004', 'Sucursal Oeste', 'Calle 25 #321, Zona Oeste', '591-4-5432167', 'oeste@importadora.com', 'La Paz');
+
+-- 3. Usuarios (password: Admin123!)
+-- NOTA: El hash es para 'Admin123!' usando PASSWORD_DEFAULT
+INSERT INTO usuarios (id_rol, id_sucursal, username, email, password_hash, estado) VALUES
+(1, NULL, 'superadmin', 'superadmin@importadora.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1),
+(2, 1, 'admincentral', 'admin.central@importadora.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1),
+(2, 2, 'adminnorte', 'admin.norte@importadora.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1),
+(3, 1, 'supervisor1', 'supervisor.central@importadora.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1),
+(4, 1, 'cajero1', 'cajero.central@importadora.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1),
+(5, 1, 'repartidor1', 'repartidor.central@importadora.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1);
+
+-- 4. Datos de usuarios
+INSERT INTO usuarios_datos (id_usuario, nombres, apellidos, cedula, telefono_movil, direccion) VALUES
+(1, 'Juan', 'Pérez Gómez', '123456789', '591-71234567', 'Oficina Central, Santa Cruz'),
+(2, 'María', 'Rodríguez López', '987654321', '591-72345678', 'Sucursal Central, Santa Cruz'),
+(3, 'Carlos', 'Mendoza Flores', '456789123', '591-73456789', 'Sucursal Norte, Santa Cruz'),
+(4, 'Ana', 'Torres Silva', '789123456', '591-74567890', 'Sucursal Central, Santa Cruz'),
+(5, 'Luis', 'García Martínez', '321654987', '591-75678901', 'Sucursal Central, Santa Cruz'),
+(6, 'Pedro', 'Ramírez Ortiz', '654987321', '591-76789012', 'Sucursal Central, Santa Cruz');
+
+-- 5. Registrar intento exitoso para el superadmin (ejemplo)
+INSERT INTO logs_acceso (id_usuario, email, ip_cliente, tipo_evento, descripcion) VALUES
+(1, 'superadmin@importadora.com', '127.0.0.1', 'login_exitoso', 'Primer acceso registrado');
+
+-- ============================================
+-- TABLA: configuracion_empresa
+-- ============================================
+CREATE TABLE configuracion_empresa (
+    id_config INT PRIMARY KEY AUTO_INCREMENT,
+    -- Datos básicos
+    razon_social VARCHAR(200) NOT NULL,
+    nombre_comercial VARCHAR(200) NOT NULL,
+    nit VARCHAR(20) NOT NULL UNIQUE,
+    regimen VARCHAR(50) DEFAULT 'General',
+    actividad_economica VARCHAR(100),
+    
+    -- Contacto
+    telefono1 VARCHAR(20),
+    telefono2 VARCHAR(20),
+    email_principal VARCHAR(100),
+    email_secundario VARCHAR(100),
+    sitio_web VARCHAR(150),
+    
+    -- Ubicación
+    pais VARCHAR(50) DEFAULT 'Bolivia',
+    departamento VARCHAR(50),
+    provincia VARCHAR(50),
+    ciudad VARCHAR(50),
+    zona VARCHAR(100),
+    direccion TEXT,
+    codigo_postal VARCHAR(20),
+    
+    -- Imágenes
+    logo VARCHAR(255) DEFAULT 'default-logo.png',
+    logo_favicon VARCHAR(255) DEFAULT 'default-favicon.ico',
+    logo_blanco VARCHAR(255) DEFAULT 'default-logo-white.png',
+    banner VARCHAR(255),
+    
+    -- Datos fiscales
+    autorizacion_factura VARCHAR(50),
+    numero_autorizacion VARCHAR(50),
+    fecha_autorizacion DATE,
+    llave_dosificacion VARCHAR(255),
+    numero_sucursal VARCHAR(10),
+    codigo_actividad VARCHAR(20),
+    matricula_comercio VARCHAR(50),
+    certificado_digital VARCHAR(255),
+    
+    -- Redes Sociales
+    facebook VARCHAR(150),
+    instagram VARCHAR(150),
+    twitter VARCHAR(150),
+    youtube VARCHAR(150),
+    linkedin VARCHAR(150),
+    tiktok VARCHAR(150),
+    whatsapp VARCHAR(20),
+    
+    -- Configuración del sistema
+    moneda_principal VARCHAR(10) DEFAULT 'BOB',
+    moneda_secundaria VARCHAR(10),
+    zona_horaria VARCHAR(50) DEFAULT 'America/La_Paz',
+    formato_fecha VARCHAR(20) DEFAULT 'd/m/Y',
+    formato_hora VARCHAR(20) DEFAULT 'H:i',
+    decimales INT DEFAULT 2,
+    separador_decimal VARCHAR(1) DEFAULT ',',
+    separador_miles VARCHAR(1) DEFAULT '.',
+    
+    -- Metadatos
+    estado TINYINT DEFAULT 1 COMMENT '1=Activo, 0=Inactivo',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    INDEX idx_nit (nit),
+    INDEX idx_estado (estado)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- INSERTAR DATOS DE EJEMPLO
+-- ============================================
+INSERT INTO configuracion_empresa (
+    razon_social, 
+    nombre_comercial, 
+    nit, 
+    regimen, 
+    actividad_economica,
+    telefono1, 
+    email_principal, 
+    sitio_web,
+    pais, 
+    departamento, 
+    ciudad, 
+    zona, 
+    direccion,
+    logo,
+    logo_favicon,
+    facebook,
+    instagram,
+    whatsapp
+) VALUES (
+    'IMPORTADORA DE REPUESTOS S.R.L.',
+    'Importadora Repuestos',
+    '1234567890',
+    'General',
+    'Comercio al por mayor de repuestos',
+    '591-2-1234567',
+    'info@importadora.com',
+    'www.importadora.com',
+    'Bolivia',
+    'Santa Cruz',
+    'Santa Cruz de la Sierra',
+    'Zona Central',
+    'Av. Principal #123, Edificio Empresarial',
+    'logo-importadora.png',
+    'favicon.ico',
+    'importadorarepuestos',
+    '@importadorarepuestos',
+    '591-71234567'
+);

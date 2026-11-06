@@ -1,0 +1,32 @@
+-- =====================================================
+-- PERMISOS DE USUARIO  ·  REFERENCIA
+-- -----------------------------------------------------
+-- En esta base (restauratemoderno) los permisos YA existen
+-- y se manejan con estas tablas reales:
+--
+--   permisos          → módulos       (1 Configuración, 2 Seguridad, ...)
+--   sub_permisos      → submenús
+--   detalle_permisos  → ítems (con ruta: empresa.php, users.php, ...)
+--   usuarios_permisos → concesiones por usuario
+--
+--   usuarios_permisos
+--     id_usuario · id_permiso · id_sub_permiso · id_detalle_permiso
+--     permitir (1) · estado (1)
+--
+-- El módulo de Privilegios escribe ahí directamente desde
+-- modelos/usuarios/usuarios_api.php (acción "guardarPermisos")
+-- expandiendo cada concesión a nivel ítem.
+--
+-- IMPORTANTE (modelo v2): cada privilegio lleva ACCIÓN
+-- (ver · registrar · modificar · eliminar) y el catálogo se
+-- reconstruye con sql_permisos_v2.sql. Ejecuta ese script una vez.
+-- NO es necesario ejecutar nada más para privilegios.
+--
+-- =====================================================
+-- Único script opcional: la columna de la foto de perfil
+-- (si no existe todavía; en esta base SÍ está creada):
+-- =====================================================
+-- ALTER TABLE usuarios_datos
+--   ADD COLUMN foto_perfil VARCHAR(255) NULL AFTER genero;
+
+-- Las fotos se guardan en:  assets/img/usuarios/<nombre_archivo>

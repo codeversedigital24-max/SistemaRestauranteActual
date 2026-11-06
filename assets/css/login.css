@@ -1,0 +1,512 @@
+/* =====================================================
+   LOGIN - RESTAURANTE MODERNO
+   Diseño tipo comida rápida: rojo + amarillo, tarjeta
+   central en dos paneles. Responsive y accesible.
+   ===================================================== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #d9232d;
+  --primary-dark: #ad1621;
+  --primary-soft: #ffe9ea;
+  --secondary: #f7b731;
+  --secondary-dark: #e29412;
+  --dark: #1c1416;
+  --gray: #6b6165;
+  --gray-light: #a79ea2;
+  --line: #ececef;
+  --surface: #ffffff;
+  --bg: #f7f5f4;
+  --error: #d9232d;
+  --success: #1f9d55;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 24px 60px rgba(28, 20, 22, 0.14);
+  --shadow-sm: 0 8px 24px rgba(28, 20, 22, 0.08);
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display: "Outfit", var(--font);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--dark);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =====================================================
+   LAYOUT
+   ===================================================== */
+.auth {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(340px, 46%) 1fr;
+}
+
+/* =====================================================
+   PANEL DE MARCA (izquierda)
+   ===================================================== */
+.auth-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px clamp(32px, 5vw, 72px);
+  color: #fff;
+  overflow: hidden;
+  background:
+    radial-gradient(1000px 500px at 110% -10%, rgba(247, 183, 49, 0.55), transparent 60%),
+    radial-gradient(700px 500px at -10% 110%, rgba(255, 255, 255, 0.18), transparent 55%),
+    linear-gradient(150deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+/* Trama sutil de "píxeles" para dar textura */
+.auth-side::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at 50% 40%, #000 30%, transparent 85%);
+  pointer-events: none;
+}
+
+.auth-side > * {
+  position: relative;
+  z-index: 1;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  color: var(--primary);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.brand-name {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.auth-title {
+  font-family: var(--display);
+  font-size: clamp(38px, 4.6vw, 62px);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+.auth-title span {
+  color: var(--secondary);
+}
+
+.auth-lead {
+  margin-top: 18px;
+  max-width: 42ch;
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.auth-features {
+  list-style: none;
+  margin-top: 34px;
+  display: grid;
+  gap: 14px;
+}
+
+.auth-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15.5px;
+  font-weight: 500;
+}
+
+.auth-features i {
+  color: var(--secondary);
+  font-size: 17px;
+}
+
+.auth-side-foot {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* =====================================================
+   PANEL DEL FORMULARIO (derecha)
+   ===================================================== */
+.auth-form {
+  display: grid;
+  place-items: center;
+  padding: clamp(24px, 5vw, 56px);
+}
+
+.auth-card {
+  width: min(430px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: clamp(18px, 2vw, 26px);
+  box-shadow: var(--shadow);
+  padding: clamp(28px, 4vw, 44px);
+}
+
+.auth-head {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.auth-head h2 {
+  margin-top: 16px;
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.auth-head p {
+  margin-top: 8px;
+  color: var(--gray);
+  font-size: 15px;
+}
+
+/* =====================================================
+   CAMPOS
+   ===================================================== */
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #42383c;
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--gray-light);
+  font-size: 15px;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.input-wrap input {
+  width: 100%;
+  height: 52px;
+  padding: 0 46px;
+  font-family: inherit;
+  font-size: 15.5px;
+  color: var(--dark);
+  background: #fbfafa;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-wrap input::placeholder {
+  color: var(--gray-light);
+}
+
+.input-wrap input:focus {
+  background: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(217, 35, 45, 0.12);
+}
+
+.input-wrap:focus-within .input-icon {
+  color: var(--primary);
+}
+
+.input-wrap input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Ojito de la contraseña */
+.toggle-pass {
+  position: absolute;
+  right: 8px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--gray-light);
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.toggle-pass:hover {
+  background: var(--line);
+  color: var(--dark);
+}
+
+.field-msg {
+  display: block;
+  min-height: 0;
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--error);
+}
+
+.field.error .input-wrap input {
+  border-color: var(--error);
+  background: #fff6f6;
+}
+
+.field.error .field-msg::before {
+  content: "⚠ ";
+}
+
+.field:focus-within label {
+  color: var(--primary);
+}
+
+/* =====================================================
+   OPCIONES + BOTÓN
+   ===================================================== */
+.auth-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 4px 0 22px;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: var(--gray);
+  cursor: pointer;
+  user-select: none;
+}
+
+.check input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.btn-primary {
+  position: relative;
+  width: 100%;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 22px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 14px 30px rgba(217, 35, 45, 0.32);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.28), transparent 70%);
+  transform: translateX(-120%);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(217, 35, 45, 0.38);
+}
+
+.btn-primary:hover:not(:disabled)::after {
+  animation: sheen 0.9s ease;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  cursor: wait;
+  filter: saturate(0.7);
+  opacity: 0.85;
+}
+
+@keyframes sheen {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* Spinner mientras valida */
+.btn-primary.loading .btn-text {
+  font-weight: 600;
+}
+
+.btn-primary.loading i {
+  animation: none;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =====================================================
+   FOOTER DE LA TARJETA
+   ===================================================== */
+.auth-foot {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line);
+  text-align: center;
+}
+
+.auth-foot p {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--gray-light);
+}
+
+.auth-foot i {
+  color: var(--success);
+}
+
+/* =====================================================
+   SWEETALERT2 (notificaciones de assets/js/login.js)
+   ===================================================== */
+.swal2-popup.swal2-toast {
+  font-family: var(--font) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.swal2-confirm:focus,
+.swal2-confirm:hover {
+  box-shadow: none !important;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media (max-width: 980px) {
+  .auth {
+    grid-template-columns: 1fr;
+  }
+
+  /* En móvil el panel de marca se reduce a una cabecera */
+  .auth-side {
+    gap: 18px;
+    padding: 26px 24px 30px;
+  }
+
+  .auth-title {
+    font-size: clamp(28px, 7vw, 40px);
+  }
+
+  .auth-lead {
+    font-size: 15px;
+    margin-top: 12px;
+  }
+
+  .auth-features {
+    display: none;
+  }
+
+  .auth-form {
+    padding: 20px 16px 40px;
+  }
+}
+
+@media (max-width: 420px) {
+  .auth-card {
+    padding: 24px 20px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .auth-head h2 {
+    font-size: 26px;
+  }
+}
+
+/* Movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

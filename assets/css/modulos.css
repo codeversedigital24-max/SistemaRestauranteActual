@@ -1,0 +1,1854 @@
+/* =====================================================
+   MODULOS.CSS  ·  Estilo compartido del sistema
+   -----------------------------------------------------
+   Un solo archivo para TODO lo visible de módulos:
+     · Tablas elegantes con cabecera de color (DataTables)
+     · Formularios compactos con iconos
+     · Modal reutilizable (nuevo / edición)
+     · Badges y botones de fila de tabla
+     · Capa correcta de SweetAlert2
+   Se carga al final del <head> en cabecera/cabecera.php
+   y siempre gana por orden sobre estilos anteriores.
+   ===================================================== */
+
+:root {
+  --mod-primaria: #d9232d;
+  --mod-primaria-osc: #ad1621;
+  --mod-primaria-suave: #ffe9ea;
+  --mod-claro: #f8f7f7;
+  --mod-linea: #ececef;
+  --mod-linea-fuerte: #d9d9e0;
+  --mod-tinta: #1c1416;
+  --mod-texto: #6b6165;
+  --mod-texto-tenue: #a79ea2;
+  --mod-verde: #14803d;
+  --mod-verde-fondo: #e5f7ec;
+  --mod-ambar: #9a6b00;
+  --mod-ambar-fondo: #fff4d6;
+  --mod-rojo-fondo: #ffecec;
+  --mod-azul: #1f6fd0;
+  --mod-azul-fondo: #e8f2fe;
+  --mod-radio: 12px;
+  --mod-radio-sm: 9px;
+  --mod-sombra-sm: 0 1px 2px rgba(16, 12, 14, 0.05);
+}
+
+/* =====================================================
+   1. DENSIDAD GENERAL
+   ===================================================== */
+.main-content {
+  padding: 10px 14px;
+}
+
+.main-content .welcome-section {
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+.main-content .welcome-text h1 {
+  font-size: 20px;
+  line-height: 1.2;
+}
+.main-content .welcome-text p {
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+.main-content .content-card .card-header {
+  padding: 10px 16px;
+  background:
+    radial-gradient(900px 180px at 100% -40%, var(--mod-primaria-osc), transparent 62%),
+    linear-gradient(135deg, var(--mod-primaria-osc) 0%, var(--mod-primaria) 100%);
+  color: #fff;
+  border-bottom: 0;
+}
+.main-content .content-card .card-header h3 {
+  font-size: 14.5px;
+  color: #fff;
+}
+.main-content .content-card .card-header h3 i {
+  color: #fff;
+  opacity: 0.9;
+}
+.main-content .content-card .card-header p,
+.main-content .content-card .card-header .contador-header {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* Los botones dentro de la franja roja mantienen buen contraste */
+.main-content .content-card .card-header .btn-mod-primario {
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--mod-primaria);
+  border-color: transparent;
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.45);
+}
+.main-content .content-card .card-header .btn-mod-primario:hover:not(:disabled) {
+  background: #fff;
+  color: var(--mod-primaria-osc);
+}
+.main-content .content-card .card-body {
+  padding: 2px 2px;
+}
+
+/* =====================================================
+   2. BADGES / CHIPS
+   ===================================================== */
+.badge-mod,
+.badge-mod-inline {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+.badge-verde {
+  background: var(--mod-verde-fondo);
+  color: var(--mod-verde);
+}
+.badge-rojo {
+  background: var(--mod-rojo-fondo);
+  color: #c62828;
+}
+.badge-ambar {
+  background: var(--mod-ambar-fondo);
+  color: var(--mod-ambar);
+}
+.badge-azul {
+  background: var(--mod-azul-fondo);
+  color: var(--mod-azul);
+}
+.badge-gris {
+  background: #f1f1f4;
+  color: var(--mod-texto);
+}
+.badge-morado {
+  background: #f3e9fb;
+  color: #7030a0;
+}
+.badge-borde {
+  background: transparent;
+  color: var(--mod-primaria);
+  border: 1px solid currentColor;
+}
+
+/* =====================================================
+   3. TABLA ELEGANTE CON CABECERA DE COLOR
+   ===================================================== */
+.dataTables_wrapper {
+  margin-top: 4px;
+}
+
+/* Contenedor responsive (tu HTML ya lo usa) */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--mod-radio);
+}
+
+/* Tabla base: radio, sombra y sin deformarse */
+#tablaUsuarios,
+table.dataTable {
+  width: 100% !important;
+  margin: 0 !important;
+  font-size: 13.5px;
+  border-collapse: separate !important;
+  border-spacing: 0;
+  border: 1px solid var(--mod-linea);
+  border-radius: var(--mod-radio);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--mod-sombra-sm);
+}
+
+/* Cabecera con color corporativo */
+table.dataTable thead th,
+table.dataTable.display thead th {
+  background: linear-gradient(
+    135deg,
+    var(--mod-primaria),
+    var(--mod-primaria-osc)
+  ) !important;
+  color: #fff !important;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  font-weight: 800;
+  padding: 11px 14px !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+table.dataTable thead th.sorting::after,
+table.dataTable thead th.sorting_asc::after,
+table.dataTable thead th.sorting_desc::after {
+  right: 10px;
+  opacity: 0.85;
+  color: #fff !important;
+}
+table.dataTable thead th.sorting,
+table.dataTable thead th.sorting_asc,
+table.dataTable thead th.sorting_desc {
+  cursor: pointer;
+}
+
+/* Cuerpo con filas uniformes */
+table.dataTable tbody td,
+table.dataTable.display tbody td {
+  padding: 9px 14px !important;
+  vertical-align: middle;
+  border-top: 1px solid var(--mod-linea) !important;
+  line-height: 1.4;
+  color: var(--mod-tinta);
+}
+
+table.dataTable tbody tr:nth-child(odd) td {
+  background: #fbfbfd;
+}
+table.dataTable tbody tr:hover td {
+  background: var(--mod-primaria-suave) !important;
+}
+table.dataTable tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+/* Textos dentro de celdas */
+.dt-num {
+  font-variant-numeric: tabular-nums;
+  color: var(--mod-texto-tenue);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.dt-texto {
+  max-width: 26ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 700;
+  color: var(--mod-tinta);
+}
+.dt-subtexto {
+  display: inline-block;
+  max-width: 26ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: 11.5px;
+  color: var(--mod-texto-tenue);
+  font-weight: 500;
+}
+
+/* ---------- Barra superior: buscador + selector (una sola fila) ---------- */
+.dataTables_wrapper > div:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* Selector "Mostrar N registros" (pill) */
+.dataTables_wrapper .dataTables_length label,
+.dt-container .dt-length label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--mod-texto);
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.dataTables_wrapper .dataTables_length select,
+.dt-container .dt-length select {
+  height: 36px !important;
+  min-width: 68px;
+  padding: 0 30px 0 12px !important;
+  font-size: 13px !important;
+  font-weight: 700;
+  color: var(--mod-tinta);
+  background-color: #fff !important;
+  border: 1.5px solid var(--mod-linea-fuerte) !important;
+  border-radius: 999px !important;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%236b6165' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+.dataTables_wrapper .dataTables_length select:focus,
+.dt-container .dt-length select:focus {
+  outline: none;
+  border-color: var(--mod-primaria) !important;
+  box-shadow: 0 0 0 3px var(--mod-primaria-suave);
+}
+
+/* Buscador (pill + lupa) */
+.dataTables_wrapper .dataTables_filter {
+  margin: 0;
+}
+.dataTables_wrapper .dataTables_filter label,
+.dt-container .dt-search label {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  margin: 0;
+  font-size: 0;
+}
+.dataTables_wrapper .dataTables_filter label::before,
+.dt-container .dt-search label::before {
+  content: "\f002";
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mod-texto-tenue);
+  font-size: 12.5px;
+  pointer-events: none;
+  z-index: 1;
+}
+.dataTables_wrapper .dataTables_filter input,
+.dt-container .dt-search input {
+  height: 36px !important;
+  width: 240px;
+  padding: 0 16px 0 36px !important;
+  font-size: 13.5px !important;
+  color: var(--mod-tinta);
+  background: #fff !important;
+  border: 1.5px solid var(--mod-linea-fuerte) !important;
+  border-radius: 999px !important;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+.dataTables_wrapper .dataTables_filter input:focus,
+.dt-container .dt-search input:focus {
+  outline: none;
+  border-color: var(--mod-primaria) !important;
+  box-shadow: 0 0 0 3px var(--mod-primaria-suave);
+}
+
+/* ---------- Pie: info + paginación ---------- */
+.dataTables_wrapper > div:nth-child(3) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.dataTables_wrapper .dataTables_info {
+  font-size: 12.5px;
+  color: var(--mod-texto-tenue);
+  padding: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+  margin: 0 !important;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  border: 1.5px solid var(--mod-linea) !important;
+  border-radius: 999px !important;
+  margin: 0 !important;
+  padding: 5px 12px !important;
+  font-size: 12.5px !important;
+  line-height: 1.5 !important;
+  color: var(--mod-texto) !important;
+  background: #fff !important;
+  transition: all 0.12s ease;
+  min-width: 34px;
+  text-align: center;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: var(--mod-primaria-suave) !important;
+  border-color: var(--mod-primaria) !important;
+  color: var(--mod-primaria) !important;
+  box-shadow: none !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: linear-gradient(
+    135deg,
+    var(--mod-primaria),
+    var(--mod-primaria-osc)
+  ) !important;
+  border-color: var(--mod-primaria) !important;
+  color: #fff !important;
+  font-weight: 800;
+  box-shadow: 0 4px 12px -4px rgba(217, 35, 45, 0.5);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+  opacity: 0.35;
+  border-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Botones Exports / filtros rápidos */
+.dt-buttons .btn,
+.dt-button {
+  border-radius: 999px !important;
+  font-size: 12.5px !important;
+  padding: 5px 14px !important;
+  border: 1.5px solid var(--mod-linea) !important;
+  background: #fff;
+  color: var(--mod-texto);
+}
+
+/* ---------- Responsive: control "+" y detalle ---------- */
+table.dataTable > tbody > tr > td.dtr-control,
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control,
+table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control {
+  position: relative;
+  padding-left: 38px !important;
+}
+table.dataTable > tbody > tr > td.dtr-control::before,
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control::before,
+table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control::before {
+  content: "+" !important;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    135deg,
+    var(--mod-primaria),
+    var(--mod-primaria-osc)
+  ) !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(217, 35, 45, 0.35);
+  transition: transform 0.15s ease;
+}
+table.dataTable > tbody > tr.parent > td.dtr-control::before,
+table.dataTable.dtr-inline.collapsed
+  > tbody
+  > tr.parent
+  > td.dtr-control::before {
+  content: "−" !important;
+}
+table.dataTable > tbody > tr > td.dtr-control:hover::before {
+  transform: translateY(-50%) scale(1.08);
+}
+
+/* Detalle expandido */
+table.dataTable > tbody > tr.child > td {
+  background: #fafafb !important;
+}
+table.dataTable > tbody > tr.child ul.dtr-details {
+  margin: 0;
+  padding: 10px 12px;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--mod-linea);
+  border-radius: var(--mod-radio-sm);
+  font-size: 13px;
+  display: block;
+}
+table.dataTable > tbody > tr.child ul.dtr-details > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--mod-linea);
+}
+table.dataTable > tbody > tr.child ul.dtr-details > li:last-child {
+  border-bottom: 0;
+}
+table.dataTable > tbody > tr.child ul.dtr-details > li > span.dtr-title {
+  font-weight: 700;
+  color: var(--mod-texto);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  flex: 0 0 auto;
+}
+table.dataTable > tbody > tr.child ul.dtr-details > li > span.dtr-data {
+  color: var(--mod-tinta);
+  font-weight: 600;
+  text-align: right;
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: break-word;
+}
+
+/* Ocultar el "+" en pantallas grandes */
+@media (min-width: 769px) {
+  table.dataTable > tbody > tr > td.dtr-control::before {
+    display: none !important;
+  }
+  table.dataTable > tbody > tr > td.dtr-control {
+    padding-left: 14px !important;
+    cursor: default;
+  }
+}
+
+/* ---------- Móvil: tabla y barra compactas ---------- */
+@media (max-width: 768px) {
+  #tablaUsuarios,
+  .dataTable {
+    font-size: 13px;
+    border-radius: var(--mod-radio-sm);
+  }
+
+  table.dataTable thead th {
+    padding: 10px !important;
+    font-size: 10.5px;
+    letter-spacing: 0.4px;
+  }
+  table.dataTable tbody td {
+    padding: 9px 10px !important;
+  }
+
+  .dt-texto,
+  .dt-subtexto {
+    max-width: 15ch;
+  }
+
+  .dataTables_wrapper > div:nth-child(1) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .dataTables_wrapper .dataTables_length {
+    order: 2;
+  }
+  .dataTables_wrapper .dataTables_filter {
+    order: 1;
+    width: 100%;
+  }
+  .dataTables_wrapper .dataTables_filter label {
+    width: 100%;
+  }
+  .dataTables_wrapper .dataTables_filter input {
+    width: 100% !important;
+  }
+  .dataTables_wrapper .dataTables_length select {
+    height: 34px !important;
+  }
+
+  .dataTables_wrapper > div:nth-child(3) {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .dataTables_wrapper .dataTables_info {
+    font-size: 11.5px;
+    text-align: center;
+    width: 100%;
+  }
+  .dataTables_wrapper .dataTables_paginate {
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .table-responsive {
+    border: 0;
+    border-radius: 0;
+    margin: 0 0px;
+    padding: 0 3px;
+  }
+}
+
+/* =====================================================
+   4. BOTONES DE FILA (Ver / Modificar / Eliminar)
+   ===================================================== */
+.acciones-fila {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn-tabla {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--mod-linea);
+  border-radius: 9px;
+  font-size: 13px;
+  cursor: pointer;
+  background: #fff;
+  color: var(--mod-texto);
+  transition:
+    transform 0.12s ease,
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  box-shadow: 0 1px 2px rgba(16, 12, 14, 0.04);
+}
+.btn-tabla:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.btn-tabla.ver {
+  color: var(--mod-azul);
+  border-color: #c8dcf5;
+  background: var(--mod-azul-fondo);
+}
+.btn-tabla.ver:hover {
+  background: var(--mod-azul);
+  border-color: var(--mod-azul);
+  color: #fff;
+}
+
+.btn-tabla.editar {
+  color: var(--mod-ambar);
+  border-color: #f0dca0;
+  background: var(--mod-ambar-fondo);
+}
+.btn-tabla.editar:hover {
+  background: #f0c040;
+  border-color: #e0b030;
+  color: #4a3400;
+}
+
+.btn-tabla.borrar {
+  color: #c62828;
+  border-color: #f5c4c4;
+  background: var(--mod-rojo-fondo);
+}
+.btn-tabla.borrar:hover {
+  background: #e0312f;
+  border-color: #b41c1b;
+  color: #fff;
+}
+
+.btn-tabla.baja {
+  color: #8a5a00;
+  border-color: #f0dca0;
+  background: #fff4d6;
+}
+.btn-tabla.baja:hover {
+  background: #b57a00;
+  border-color: #9a6800;
+  color: #fff;
+}
+
+.btn-tabla.alta {
+  color: #14803d;
+  border-color: #bfe3cb;
+  background: #e5f7ec;
+}
+.btn-tabla.alta:hover {
+  background: #14803d;
+  border-color: #0f6630;
+  color: #fff;
+}
+
+.btn-tabla:disabled,
+.btn-tabla[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* =====================================================
+   5. BOTONES GENERALES DE MÓDULO
+   ===================================================== */
+.btn-mod {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 0;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+.btn-mod i {
+  font-size: 12.5px;
+}
+.btn-mod-primario {
+  background: linear-gradient(
+    135deg,
+    var(--mod-primaria),
+    var(--mod-primaria-osc)
+  );
+  color: #fff;
+  box-shadow: 0 8px 20px -8px rgba(217, 35, 45, 0.55);
+}
+.btn-mod-primario:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px -8px rgba(217, 35, 45, 0.65);
+}
+.btn-mod-suave {
+  background: var(--mod-primaria-suave);
+  color: var(--mod-primaria);
+}
+.btn-mod-suave:hover {
+  background: #ffdcdc;
+}
+.btn-mod-claro {
+  background: #fff;
+  color: var(--mod-texto);
+  border: 1.5px solid var(--mod-linea);
+}
+.btn-mod-claro:hover {
+  background: var(--mod-claro);
+  color: var(--mod-tinta);
+}
+.btn-mod-peligro {
+  background: linear-gradient(135deg, #e0312f, #b41c1b);
+  color: #fff;
+}
+.btn-mod-peligro:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+.btn-mod:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none !important;
+}
+/* =====================================================
+   6. MODAL COMPACTO (scroll en móvil y desktop)
+   ===================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: rgba(15, 10, 12, 0.55);
+  backdrop-filter: blur(3px);
+  /* CLAVE: el overlay NO atrapa el scroll */
+  overflow: hidden;
+}
+.modal-overlay.abierto {
+  display: flex;
+  animation: mdlAparece 0.16s ease;
+}
+@keyframes mdlAparece {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-caja {
+  width: min(820px, 100%); /* más ancho, aprovecha pantalla */
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.38);
+  animation: mdlSube 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 28px);
+  max-height: calc(100dvh - 28px);
+  overflow: hidden;
+}
+@keyframes mdlSube {
+  from {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* El form debe ser flex para transmitir altura al cuerpo */
+.modal-caja > form {
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* ← sin esto, no hay scroll */
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.modal-cabecera {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  background: linear-gradient(
+    135deg,
+    var(--mod-primaria),
+    var(--mod-primaria-osc)
+  );
+  color: #fff;
+}
+.modal-cabecera h2 {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.modal-cabecera .ico-titulo {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 9px;
+  font-size: 14px;
+}
+.modal-cerrar {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+/* Cuerpo con scroll interno REAL */
+.modal-cuerpo {
+  flex: 1 1 auto;
+  min-height: 0; /* CLAVE para flexbox */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 14px 16px 4px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 12px;
+  scrollbar-width: thin;
+}
+.modal-cuerpo .ancho-2 {
+  grid-column: span 2;
+}
+
+.modal-pie {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 14px;
+  background: #fff;
+  border-top: 1px solid var(--mod-linea);
+}
+
+/* Móvil: margen arriba para el header fijo, altura calculada */
+@media (max-width: 640px) {
+  .modal-overlay {
+    align-items: flex-start;
+    padding: calc(env(safe-area-inset-top) + 56px) 8px 8px;
+  }
+  .modal-caja {
+    max-height: calc(100dvh - 72px);
+    border-radius: 14px;
+  }
+  .modal-cuerpo {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 12px 12px 4px;
+  }
+  .modal-cuerpo .ancho-2 {
+    grid-column: span 1;
+  }
+  .modal-cabecera {
+    padding: 10px 14px;
+  }
+  .modal-pie {
+    padding: 10px 14px 12px;
+  }
+}
+@media (max-width: 640px) {
+  .modal-overlay {
+    align-items: flex-start;
+    padding: calc(env(safe-area-inset-top) + 64px) 10px 10px;
+  }
+  .modal-caja {
+    max-height: calc(100dvh - 80px);
+    border-radius: 14px;
+  }
+  .modal-cuerpo {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 12px 14px 4px;
+  }
+  .modal-cuerpo .ancho-2 {
+    grid-column: span 1;
+  }
+  .modal-cabecera {
+    padding: 10px 14px;
+  }
+  .modal-pie {
+    padding: 10px 14px 12px;
+  }
+}
+
+/* =====================================================
+   7. FORMULARIO COMPACTO
+   ===================================================== */
+.campo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.campo label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--mod-tinta);
+  letter-spacing: 0.1px;
+}
+.campo label .txt-ico {
+  color: var(--mod-primaria);
+  font-size: 12px;
+  width: 14px;
+  text-align: center;
+}
+.campo label .req {
+  color: var(--mod-primaria);
+  font-weight: 900;
+}
+
+.campo .wrap-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.campo .wrap-input .ico-izq {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mod-texto-tenue);
+  font-size: 12.5px;
+  pointer-events: none;
+  transition: color 0.15s ease;
+  z-index: 1;
+  line-height: 1;
+}
+.campo:focus-within .ico-izq {
+  color: var(--mod-primaria);
+}
+
+.input-modern,
+.select-modern,
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px 0 36px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--mod-tinta);
+  border: 1.5px solid var(--mod-linea-fuerte);
+  border-radius: var(--mod-radio-sm);
+  background: #fff;
+  line-height: 1.2;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    background 0.15s;
+  box-sizing: border-box;
+}
+.campo textarea {
+  height: auto;
+  min-height: 68px;
+  padding: 8px 12px 8px 36px;
+  resize: vertical;
+}
+
+.select-modern,
+.campo select {
+  padding-left: 12px;
+  padding-right: 32px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%236b6165' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus,
+.input-modern:focus,
+.select-modern:focus {
+  outline: none;
+  border-color: var(--mod-primaria);
+  box-shadow: 0 0 0 3px var(--mod-primaria-suave);
+}
+
+.campo .campo-ojo input {
+  padding-right: 40px;
+}
+.campo .ojo {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  color: var(--mod-texto-tenue);
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12.5px;
+}
+.campo .ojo:hover {
+  background: var(--mod-linea);
+  color: var(--mod-tinta);
+}
+
+.campo .ayuda {
+  display: block;
+  margin-top: 2px;
+  font-size: 10.5px;
+  color: var(--mod-texto-tenue);
+  line-height: 1.2;
+}
+.campo.error .input-modern,
+.campo.error input,
+.campo.error select,
+.campo.error textarea {
+  border-color: var(--mod-primaria);
+  background: #fff6f6;
+}
+
+.campo .ayuda.error {
+  color: var(--mod-primaria);
+  font-weight: 700;
+}
+.campo .ayuda.error::before {
+  content: "⚠ ";
+}
+
+.modal-cuerpo .bloque-safe {
+  font-size: 12px;
+}
+
+/* =====================================================
+   8. SWEETALERT2
+   ===================================================== */
+.swal2-container {
+  z-index: 3000 !important;
+}
+.swal2-container .swal2-popup {
+  border-radius: 14px !important;
+}
+.swal2-title {
+  font-size: 1.25em !important;
+  font-weight: 800 !important;
+}
+.swal2-html-container {
+  font-size: 1em !important;
+}
+.swal2-confirm,
+.swal2-cancel,
+.swal2-deny,
+.swal2-styled {
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+}
+.swal2-html-container .dl-datos {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  text-align: left;
+  font-size: 14.5px;
+  margin-top: 6px;
+}
+.swal2-html-container .dl-datos dt {
+  color: var(--mod-texto-tenue);
+  font-weight: 700;
+}
+.swal2-html-container .dl-datos dd {
+  margin: 0;
+  color: var(--mod-tinta);
+  font-weight: 600;
+}
+
+.toast {
+  border-radius: 10px !important;
+  font-size: 13.5px !important;
+}
+
+/* =====================================================
+   9. CARGA
+   ===================================================== */
+.tabla-carga {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 22px 0;
+  color: var(--mod-texto-tenue);
+  font-size: 13.5px;
+}
+.tabla-carga.visible {
+  display: flex;
+}
+.mini-spin {
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--mod-linea);
+  border-top-color: var(--mod-primaria);
+  border-radius: 50%;
+  animation: mdlGira 0.7s linear infinite;
+}
+@keyframes mdlGira {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =====================================================
+   10. UTILIDADES
+   ===================================================== */
+.txt-tenue {
+  color: var(--mod-texto-tenue);
+}
+.txt-fuerte {
+  font-weight: 800;
+  color: var(--mod-tinta);
+}
+.vacio {
+  color: var(--mod-texto-tenue);
+  font-size: 12.5px;
+  font-style: italic;
+}
+
+/* Contenedor responsive: sin aire extra */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--mod-radio);
+}
+
+/* Tabla base */
+#tablaUsuarios,
+table.dataTable {
+  width: 100% !important;
+  margin: 0 !important;
+  font-size: 13.5px;
+  border-collapse: separate !important;
+  border-spacing: 0;
+  border: 1px solid var(--mod-linea);
+  border-radius: var(--mod-radio);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--mod-sombra-sm);
+}
+
+/* Cabecera de color */
+table.dataTable thead th {
+  background: linear-gradient(
+    135deg,
+    var(--mod-primaria),
+    var(--mod-primaria-osc)
+  ) !important;
+  color: #fff !important;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  font-weight: 800;
+  padding: 11px 12px !important; /* ← padding horizontal menor */
+  border: 0 !important;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+table.dataTable tbody td {
+  padding: 9px 12px !important; /* ← antes 14, ahora 12 */
+  vertical-align: middle;
+  border-top: 1px solid var(--mod-linea) !important;
+  line-height: 1.4;
+  color: var(--mod-tinta);
+}
+table.dataTable tbody tr:nth-child(odd) td {
+  background: #fbfbfd;
+}
+table.dataTable tbody tr:hover td {
+  background: var(--mod-primaria-suave) !important;
+}
+table.dataTable tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+/* === CONTENEDORES SIN AIRE LATERAL === */
+/* main-content y card-body: el padding lo da solo la tabla */
+.main-content {
+  padding: 3px 3px;
+} /* ← antes 14 */
+.main-content .content-card .card-body {
+  padding: 3px 3px;
+} /* ← antes 16 */
+
+@media (min-width: 900px) {
+  .main-content {
+    padding: 3px 3px;
+  }
+  .main-content .content-card .card-body {
+    padding: 3px 3px;
+  }
+}
+
+/* === BARRA SUPERIOR: buscador + select en UNA FILA siempre === */
+.dataTables_wrapper > div:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap; /* ← no rompe a nueva línea */
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 1 auto;
+  margin: 0;
+  min-width: 0; /* permite encoger */
+}
+
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--mod-texto);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Select pill */
+.dataTables_wrapper .dataTables_length select {
+  height: 34px !important;
+  min-width: 60px;
+  padding: 0 26px 0 10px !important;
+  font-size: 12.5px !important;
+  font-weight: 700;
+  background-color: #fff !important;
+  border: 1.5px solid var(--mod-linea-fuerte) !important;
+  border-radius: 999px !important;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%236b6165' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* Buscador pill con lupa */
+.dataTables_wrapper .dataTables_filter label {
+  position: relative;
+  font-size: 0;
+}
+.dataTables_wrapper .dataTables_filter label::before {
+  content: "\f002";
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mod-texto-tenue);
+  font-size: 12px;
+  pointer-events: none;
+}
+.dataTables_wrapper .dataTables_filter input {
+  height: 34px !important;
+  width: 220px;
+  max-width: 100%;
+  padding: 0 14px 0 32px !important;
+  font-size: 13px !important;
+  border: 1.5px solid var(--mod-linea-fuerte) !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+}
+.dataTables_wrapper .dataTables_filter input:focus {
+  outline: none;
+  border-color: var(--mod-primaria) !important;
+  box-shadow: 0 0 0 3px var(--mod-primaria-suave);
+}
+
+/* En pantallas pequeñas: SÍ se apila, pero compacto */
+@media (max-width: 640px) {
+  .dataTables_wrapper > div:nth-child(1) {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .dataTables_wrapper .dataTables_filter {
+    order: 1;
+    flex: 1 1 100%;
+  }
+  .dataTables_wrapper .dataTables_length {
+    order: 2;
+    flex: 1 1 100%;
+  }
+  .dataTables_wrapper .dataTables_filter input {
+    width: 100% !important;
+  }
+  .dataTables_wrapper .dataTables_length label {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+/* =====================================================
+   FORZAR BUSCADOR Y SELECT EN UNA SOLA FILA HORIZONTAL
+   ===================================================== */
+
+/* 1. El contenedor principal (DataTables lo llama directamente) */
+.dataTables_wrapper > div:first-child,
+.dataTables_wrapper .dt-top {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+  width: 100% !important;
+}
+
+/* 2. El buscador ocupa el espacio de la izquierda */
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dt-buscador {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  float: none !important;
+  text-align: left !important;
+  margin: 0 !important;
+}
+
+.dataTables_wrapper .dataTables_filter label {
+  width: 100% !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 0 !important; /* Oculta la palabra "Buscar:" */
+}
+
+/* Input del buscador */
+.dataTables_wrapper .dataTables_filter input {
+  width: 100% !important;
+  height: 36px !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+  border: 1.5px solid var(--mod-linea-fuerte) !important;
+  padding: 0 12px 0 34px !important; /* Espacio para la lupa */
+  font-size: 13px !important;
+  background: #fff !important;
+}
+
+/* Lupa dentro del input */
+.dataTables_wrapper .dataTables_filter label::before {
+  content: "\f002";
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 12px;
+  color: var(--mod-texto-tenue);
+  font-size: 13px;
+  pointer-events: none;
+  z-index: 1;
+}
+.dataTables_wrapper .dataTables_filter label {
+  position: relative !important;
+}
+
+/* 3. El selector se queda fijo a la derecha sin encogerse */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dt-selector {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  float: none !important;
+  text-align: right !important;
+  margin: 0 !important;
+}
+
+.dataTables_wrapper .dataTables_length label {
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 12px !important;
+  white-space: nowrap !important;
+}
+
+/* Select estilizado */
+.dataTables_wrapper .dataTables_length select {
+  height: 36px !important;
+  padding: 0 26px 0 10px !important;
+  border-radius: 999px !important;
+  border: 1.5px solid var(--mod-linea-fuerte) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  background-color: #fff !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%236b6165' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 9px center !important;
+  margin: 0 !important;
+}
+
+/* 4. En móvil: Ocultar el texto "Mostrar X registros" para que quepa */
+@media (max-width: 768px) {
+  .dataTables_wrapper .dataTables_length label {
+    font-size: 0 !important; /* Oculta el texto dejando solo el select */
+    gap: 0 !important;
+  }
+  
+  .dataTables_wrapper .dataTables_length select {
+    min-width: 60px !important;
+    height: 34px !important;
+  }
+  
+  .dataTables_wrapper .dataTables_filter input {
+    height: 34px !important;
+  }
+}
+/* =====================================================
+   CABECERA DE LA TABLA EN MÓVIL (BOTÓN SOLO CON ICONO)
+   ===================================================== */
+@media (max-width: 640px) {
+  /* 1. Mantener el título y el botón en la misma fila */
+  .main-content .content-card .card-header {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+
+  /* 2. Evitar que el título empuje el botón fuera de la pantalla */
+  .main-content .content-card .card-header h3 {
+    font-size: 14px !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex: 1 1 auto !important;
+  }
+
+  /* 3. Ocultar el texto del botón */
+  .main-content .content-card .card-header .btn-mod span {
+    display: none !important;
+  }
+
+  /* 4. Convertir el botón en un círculo perfecto */
+  .main-content .content-card .card-header .btn-mod {
+    width: 34px !important;
+    height: 34px !important;
+    padding: 0 !important;
+    border-radius: 50% !important; /* Lo hace redondo */
+    flex: 0 0 auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* 5. Ajustar el tamaño del ícono "+" */
+  .main-content .content-card .card-header .btn-mod i {
+    font-size: 15px !important;
+    margin: 0 !important;
+  }
+}
+
+/* =====================================================
+   13. FOTO DE PERFIL (avatar en la tabla y el detalle)
+   ===================================================== */
+.avatar-fila {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  vertical-align: middle;
+}
+
+.avatar-mini {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--mod-linea);
+  background: #fff;
+}
+
+.avatar-iniciales {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff !important;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border: none;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.35);
+}
+
+.detalle-foto {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.avatar-ver {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--mod-linea);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+.avatar-ver.avatar-iniciales {
+  font-size: 24px;
+  flex-direction: column;
+}
+
+/* =====================================================
+   14. MODAL DE PERMISOS (árbol de privilegios)
+   ===================================================== */
+.perm-cuerpo {
+  grid-template-columns: 1fr !important;
+  gap: 8px !important;
+}
+
+.perm-resumen {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  padding: 9px 12px;
+  background: var(--mod-claro);
+  border: 1px solid var(--mod-linea);
+  border-radius: var(--mod-radio-sm);
+}
+
+.perm-arbol {
+  padding: 2px;
+  border: 1px dashed var(--mod-linea-fuerte, var(--mod-linea));
+  border-radius: var(--mod-radio-sm);
+  background: #fff;
+}
+
+/* Módulo */
+.perm-grupo {
+  border: 1px solid var(--mod-linea);
+  border-radius: var(--mod-radio-sm);
+  margin-bottom: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+.perm-grupo:last-child {
+  margin-bottom: 2px;
+}
+
+.perm-mod {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--mod-tinta);
+  cursor: pointer;
+  background: var(--mod-claro);
+  border-bottom: 1px solid var(--mod-linea);
+}
+.perm-mod:hover {
+  background: var(--mod-primaria-suave);
+}
+.perm-mod i {
+  color: var(--mod-primaria);
+  width: 16px;
+  text-align: center;
+}
+
+.perm-cuenta,
+.perm-cuenta-sub {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mod-texto-tenue);
+  background: #fff;
+  border: 1px solid var(--mod-linea);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+.perm-cuenta {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Submenú */
+.perm-subs {
+  padding: 6px;
+  display: grid;
+  gap: 5px;
+}
+
+.perm-sub {
+  border-left: 3px solid var(--mod-linea);
+  padding-left: 8px;
+  border-radius: 6px;
+}
+
+.perm-sub-t {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #433c3f;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.perm-sub-t i {
+  color: var(--mod-primaria);
+  font-size: 12.5px;
+  width: 16px;
+  text-align: center;
+}
+.perm-sub-t .perm-nombre {
+  min-width: 0;
+}
+
+/* Ítems como píldoras */
+.perm-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 3px 0 6px 24px;
+}
+
+.perm-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--mod-texto);
+  background: #fff;
+  border: 1.5px solid var(--mod-linea);
+  border-radius: 999px;
+  padding: 3px 11px 3px 8px;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+.perm-item:hover {
+  border-color: var(--mod-primaria);
+}
+.perm-item:has(input:checked) {
+  background: var(--mod-primaria-suave);
+  border-color: var(--mod-primaria);
+  color: var(--mod-primaria);
+  font-weight: 700;
+}
+
+.perm-mod input[type="checkbox"],
+.perm-sub-t input[type="checkbox"],
+.perm-item input[type="checkbox"] {
+  accent-color: var(--mod-primaria);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+/* Fila de acciones del modal de permisos */
+.perm-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  border-top: 1px solid var(--mod-linea);
+}
+.perm-acciones .btn-mod {
+  height: 32px;
+  font-size: 13px;
+  padding: 0 14px;
+}
+
+.perm-contador {
+  margin-left: auto;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--mod-primaria);
+  background: var(--mod-primaria-suave);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+@media (max-width: 640px) {
+  .perm-items {
+    padding-left: 12px;
+  }
+  .perm-contador {
+    margin-left: 0;
+  }
+  .perm-acciones {
+    gap: 6px;
+  }
+}
+
+/* ---- Foto de perfil ---- */
+.campo-foto .foto-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.foto-preview {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #eef1f6;
+    border: 2px dashed #c7cdd8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #98a2b3;
+    font-size: 32px;
+    flex: 0 0 auto;
+    transition: border-color .2s, background .2s;
+}
+.foto-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.foto-preview.con-foto {
+    border-style: solid;
+    border-color: #4f8cff;
+    background: #fff;
+}
+
+.foto-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.btn-mod-peligro {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+.btn-mod-peligro:hover {
+    background: #fecaca;
+}
+
+/* Estado cerrado: oculto, sin capturar clics */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;                  /* ← oculto por defecto */
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 10000;
+    overflow-y: auto;
+}
+
+/* Estado abierto: visible y centrado */
+.modal-overlay.abierto {
+    display: flex;
+}
+
+.modal-caja {
+    position: relative;
+    width: 100%;
+    max-width: 720px;               /* ajusta al ancho que quieras */
+    max-height: calc(100vh - 32px);
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+}
+
+/* La cabecera y el pie no scrollean; el cuerpo sí */
+.modal-cabecera,
+.modal-pie {
+    flex: 0 0 auto;
+}
+
+.modal-cuerpo {
+    flex: 1 1 auto;
+    min-height: 0;                  /* imprescindible para que el scroll funcione */
+    overflow-y: auto;
+}

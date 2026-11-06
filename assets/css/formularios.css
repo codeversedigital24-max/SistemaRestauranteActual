@@ -1,0 +1,858 @@
+/* ============================================
+   FORMULARIOS MODERNOS - ESTILO ELEGANTE
+   ============================================ */
+
+/* Contenedor del formulario */
+.form-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-md);
+}
+
+.form-container .form-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--dark);
+  margin-bottom: var(--spacing-xs);
+}
+
+.form-container .form-subtitle {
+  color: var(--gray);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--secondary-light);
+}
+
+/* Grid de formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.form-grid .full-width {
+  grid-column: 1 / -1;
+}
+
+/* Grupo de formulario */
+.form-group-modern {
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-group-modern label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--gray-dark);
+  margin-bottom: var(--spacing-xs);
+}
+
+.form-group-modern label .label-icon {
+  color: var(--primary);
+  font-size: var(--font-size-md);
+  width: 20px;
+}
+
+.form-group-modern label .required {
+  color: var(--error);
+  font-weight: var(--font-weight-bold);
+  margin-left: 2px;
+}
+
+/* Input moderno con icono */
+.input-modern-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-modern-wrapper .input-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--gray-light);
+  font-size: var(--font-size-md);
+  transition: var(--transition);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.input-modern-wrapper .input-icon.right {
+  left: auto;
+  right: 14px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.input-modern-wrapper .input-icon:hover {
+  color: var(--primary);
+}
+
+.input-modern {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  border: 2px solid var(--gray-lighter);
+  border-radius: var(--radius);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--dark);
+  background: var(--white);
+  transition: var(--transition);
+  line-height: 1.4;
+}
+
+.input-modern:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(108, 27, 58, 0.08);
+}
+
+.input-modern::placeholder {
+  color: var(--gray-light);
+  font-size: var(--font-size-sm);
+}
+
+.input-modern:disabled {
+  background: var(--light-gray);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.input-modern.error {
+  border-color: var(--error);
+}
+
+.input-modern.error:focus {
+  box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1);
+}
+
+.input-modern.success {
+  border-color: var(--success);
+}
+
+.input-modern.success:focus {
+  box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.1);
+}
+
+/* Con icono a la derecha */
+.input-modern.has-icon-right {
+  padding-right: 44px;
+}
+
+/* Textarea moderno */
+.textarea-modern {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--gray-lighter);
+  border-radius: var(--radius);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--dark);
+  background: var(--white);
+  transition: var(--transition);
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+.textarea-modern:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(108, 27, 58, 0.08);
+}
+
+.textarea-modern::placeholder {
+  color: var(--gray-light);
+}
+
+/* Select moderno */
+.select-modern-wrapper {
+  position: relative;
+}
+
+.select-modern-wrapper .select-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-light);
+  pointer-events: none;
+  font-size: var(--font-size-sm);
+}
+
+.select-modern {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: 2px solid var(--gray-lighter);
+  border-radius: var(--radius);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--dark);
+  background: var(--white);
+  transition: var(--transition);
+  appearance: none;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.select-modern:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(108, 27, 58, 0.08);
+}
+
+.select-modern option {
+  padding: 8px;
+}
+
+/* Checkbox y Radio modernos */
+.checkbox-modern,
+.radio-modern {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--gray-dark);
+  padding: var(--spacing-xs) 0;
+}
+
+.checkbox-modern input[type="checkbox"],
+.radio-modern input[type="radio"] {
+  display: none;
+}
+
+.checkbox-modern .checkmark,
+.radio-modern .checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--gray-lighter);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  flex-shrink: 0;
+  background: var(--white);
+}
+
+.radio-modern .checkmark {
+  border-radius: var(--radius-full);
+}
+
+.checkbox-modern input:checked + .checkmark,
+.radio-modern input:checked + .checkmark {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.checkbox-modern input:checked + .checkmark::after {
+  content: "✓";
+  color: var(--white);
+  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+}
+
+.radio-modern input:checked + .checkmark::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--white);
+  border-radius: var(--radius-full);
+}
+
+.checkbox-modern:hover .checkmark,
+.radio-modern:hover .checkmark {
+  border-color: var(--primary-light);
+}
+
+/* File Upload moderno */
+.file-upload-modern {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  border: 2px dashed var(--gray-lighter);
+  border-radius: var(--radius);
+  transition: var(--transition);
+  cursor: pointer;
+  background: var(--light-gray);
+  min-height: 120px;
+}
+
+.file-upload-modern:hover {
+  border-color: var(--primary);
+  background: var(--secondary-lighter);
+}
+
+.file-upload-modern .upload-icon {
+  font-size: 2.5rem;
+  color: var(--gray-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+.file-upload-modern .upload-text {
+  font-size: var(--font-size-sm);
+  color: var(--gray);
+  font-weight: var(--font-weight-medium);
+}
+
+.file-upload-modern .upload-hint {
+  font-size: var(--font-size-xs);
+  color: var(--gray-light);
+  margin-top: var(--spacing-xs);
+}
+
+.file-upload-modern input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Previsualización de imágenes */
+.image-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+}
+
+.image-preview-item {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 2px solid var(--gray-lighter);
+  background: var(--light-gray);
+}
+
+.image-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: var(--spacing-xs);
+}
+
+.image-preview-item .remove-image {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--error);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  transition: var(--transition);
+  opacity: 0;
+}
+
+.image-preview-item:hover .remove-image {
+  opacity: 1;
+}
+
+.image-preview-item .remove-image:hover {
+  transform: scale(1.1);
+}
+
+.image-preview-item .image-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--white);
+  font-size: var(--font-size-xs);
+  padding: 4px 8px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================
+   BOTONES DEL FORMULARIO
+   ============================================ */
+.form-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 2px solid var(--light-gray);
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   RESPONSIVE FORMULARIOS
+   ============================================ */
+@media (max-width: 768px) {
+  .form-container {
+    padding: var(--spacing-md);
+    border-radius: var(--radius);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .form-container .form-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .input-modern {
+    padding: 10px 14px 10px 38px;
+    font-size: var(--font-size-sm);
+  }
+
+  .input-modern-wrapper .input-icon {
+    left: 12px;
+    font-size: var(--font-size-sm);
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .image-preview-item {
+    width: 80px;
+    height: 80px;
+  }
+
+  .file-upload-modern {
+    min-height: 100px;
+    padding: var(--spacing-md);
+  }
+
+  .file-upload-modern .upload-icon {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-nuevo-sucursal {
+    width: 100%;
+    height: 32px;
+    padding: 0 8px;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .form-container {
+    padding: var(--spacing-sm);
+  }
+
+  .form-group-modern label {
+    font-size: var(--font-size-xs);
+  }
+
+  .input-modern {
+    padding: 8px 12px 8px 34px;
+    font-size: var(--font-size-xs);
+  }
+
+  .input-modern-wrapper .input-icon {
+    left: 10px;
+    font-size: var(--font-size-xs);
+  }
+
+  .image-preview-container {
+    gap: var(--spacing-sm);
+  }
+
+  .image-preview-item {
+    width: 70px;
+    height: 70px;
+  }
+}
+/* ============================================
+   DATOS FINANCIEROS Y HORARIO LABORAL
+   ============================================ */
+
+/* ============================================
+   DÍAS DE LA SEMANA - CHECKBOXES
+   ============================================ */
+.dias-semana-container {
+  padding: 8px 0;
+}
+
+.dias-semana-container .form-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--light-gray);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  cursor: pointer;
+  border: 2px solid transparent;
+  margin-bottom: 4px;
+  min-height: 36px;
+}
+
+.dias-semana-container .form-check:hover {
+  background: var(--secondary-lighter);
+  border-color: var(--secondary-light);
+}
+
+.dias-semana-container .form-check-input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--primary);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.dias-semana-container .form-check-input:checked + .form-check-label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.dias-semana-container .form-check-label {
+  font-size: var(--font-size-sm);
+  color: var(--gray-dark);
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ============================================
+   HORARIO LABORAL - INPUTS DE HORA
+   ============================================ */
+.horario-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 8px;
+}
+
+.horario-container .horario-separador {
+  color: var(--gray-light);
+  font-size: var(--font-size-md);
+  padding-bottom: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.horario-container .input-modern-wrapper input[type="time"] {
+  padding: 10px 14px 10px 38px;
+  font-size: var(--font-size-sm);
+}
+
+.horario-container
+  .input-modern-wrapper
+  input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(20%) sepia(80%) saturate(500%) hue-rotate(320deg);
+}
+
+.input-money {
+  padding-left: 42px !important;
+  font-weight: 600;
+  font-size: var(--font-size-sm) !important;
+  color: var(--primary) !important;
+}
+
+.input-money-prefix {
+  position: absolute;
+  left: 12px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--primary);
+  z-index: 1;
+  pointer-events: none;
+  line-height: 1;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ============================================
+   BADGE DE RESUMEN HORARIO
+   ============================================ */
+.horario-resumen {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--secondary-lighter);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  color: var(--primary);
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.horario-resumen i {
+  color: var(--secondary);
+  font-size: var(--font-size-sm);
+}
+
+.horario-resumen .total-horas {
+  color: var(--gray-dark);
+  font-weight: 500;
+}
+
+/* ============================================
+   DIAS SELECCIONADOS - CONTADOR
+   ============================================ */
+.dias-contador {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .dias-semana-container .form-check {
+    padding: 4px 8px;
+    min-height: 32px;
+  }
+
+  .dias-semana-container .form-check-label {
+    font-size: var(--font-size-xs);
+  }
+
+  .horario-container {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .horario-container .horario-separador {
+    padding: 0;
+    text-align: left;
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .dias-semana-container .form-check {
+    padding: 4px 6px;
+    min-height: 30px;
+  }
+
+  .dias-semana-container .form-check-input {
+    width: 14px;
+    height: 14px;
+  }
+
+  .dias-semana-container .form-check-label {
+    font-size: 11px;
+  }
+}
+/* ============================================
+   DÍAS DE LA SEMANA - CHECKBOXES MEJORADOS
+   ============================================ */
+.dias-semana-container {
+  padding: 8px 0;
+}
+
+/* Label = contenedor clickeable */
+.dias-semana-container .form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--light-gray);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 2px solid var(--gray-lighter);
+  margin-bottom: 6px;
+  min-height: 40px;
+  position: relative;
+  user-select: none;
+}
+
+/* ✅ Hover - solo en hover */
+.dias-semana-container .form-check:hover {
+  background: var(--secondary-lighter);
+  border-color: var(--secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(201, 168, 124, 0.2);
+}
+
+/* Checkbox input */
+.dias-semana-container .form-check-input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary);
+  margin: 0;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+/* Label texto */
+.dias-semana-container .form-check-label {
+  font-size: var(--font-size-sm);
+  color: var(--gray-dark);
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+  white-space: nowrap;
+  transition: var(--transition);
+  flex: 1;
+  font-weight: 500;
+}
+
+/* ============================================
+   ✅ CUANDO ESTÁ SELECCIONADO - TODO EL DIV
+   ============================================ */
+.dias-semana-container .form-check:has(input:checked) {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(108, 27, 58, 0.25);
+}
+
+/* ✅ Texto cambia a blanco */
+.dias-semana-container .form-check:has(input:checked) .form-check-label {
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* ✅ Checkbox también se ve diferente */
+.dias-semana-container .form-check:has(input:checked) .form-check-input {
+  accent-color: var(--white);
+}
+
+/* ✅ Efecto de check interno */
+.dias-semana-container .form-check:has(input:checked)::after {
+  content: "✓";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary);
+  font-size: 14px;
+  font-weight: bold;
+  animation: checkPop 0.2s ease;
+}
+
+@keyframes checkPop {
+  0% {
+    transform: translateY(-50%) scale(0);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.2);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+/* ✅ Cuando está seleccionado Y hover */
+.dias-semana-container .form-check:has(input:checked):hover {
+  background: var(--primary-light);
+  border-color: var(--primary-light);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(108, 27, 58, 0.3);
+}
+
+/* ============================================
+   FALLBACK PARA NAVEGADORES SIN :has()
+   ============================================ */
+/* Para navegadores antiguos que no soportan :has() */
+.dias-semana-container .form-check.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(108, 27, 58, 0.25);
+}
+
+.dias-semana-container .form-check.selected .form-check-label {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.dias-semana-container .form-check.selected::after {
+  content: "✓";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .dias-semana-container .form-check {
+    padding: 6px 10px;
+    min-height: 36px;
+    gap: 6px;
+  }
+
+  .dias-semana-container .form-check-input {
+    width: 16px;
+    height: 16px;
+  }
+
+  .dias-semana-container .form-check-label {
+    font-size: var(--font-size-xs);
+  }
+
+  .dias-semana-container .form-check:has(input:checked)::after,
+  .dias-semana-container .form-check.selected::after {
+    font-size: 12px;
+    right: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dias-semana-container .form-check {
+    padding: 5px 8px;
+    min-height: 32px;
+    border-width: 1.5px;
+  }
+
+  .dias-semana-container .form-check-input {
+    width: 14px;
+    height: 14px;
+  }
+
+  .dias-semana-container .form-check-label {
+    font-size: 11px;
+  }
+
+  .dias-semana-container .form-check:has(input:checked)::after,
+  .dias-semana-container .form-check.selected::after {
+    display: none; /* Ocultar check en móvil pequeño */
+  }
+}

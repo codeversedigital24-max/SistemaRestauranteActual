@@ -1,0 +1,8 @@
+Carpeta de fotos de perfil de los usuarios.
+
+Formato recomendado: JPG/PNG cuadrado de 200x200 px (peso máximo ~300 KB).
+Nombre sugerido:  foto_<id_usuario>.<ext>   ej. foto_5.png
+
+El valor que se guarda en  usuarios_datos.foto_perfil  es el NOMBRE del archivo
+(o una ruta/URL completa, que el sistema respeta tal cual).
+Si el archivo no existe, el sistema pinta las iniciales del usuario.
