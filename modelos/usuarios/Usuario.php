@@ -407,7 +407,7 @@ class Usuario
      *
      * @param int $estado 1 = activo, 0 = de baja
      */
-    public function cambiarEstado(int $id, int $estado, int $operadorId, int $nivelOperador): array
+    public function cambiarEstado(int $id, int $estado, int $operadorId, int $nivelOperador ): array
     {
         if ($id <= 0) {
             return ['exito' => false, 'mensaje' => 'Usuario no válido', 'id' => 0];
